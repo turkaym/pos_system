@@ -12,7 +12,7 @@ class Product(Base):
     price = Column(DECIMAL(10, 2), nullable=False)
     stock = Column(DECIMAL(10, 3), nullable=False, default=0)
     unit = Column(Enum("kg", "unit"), nullable=False)
-    is_activa = Column(Boolean, default=True, nullable=False)
+    is_active = Column(Boolean, default=True, nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow,

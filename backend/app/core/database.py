@@ -5,24 +5,18 @@ Database configuration and session management.
 - Provides DB session dependency
 - Central place for DB connection
 """
-from app.core import config
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-
-# ENV VARIABLES
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = os.getenv("DB_PORT", "3306")
-DB_NAME = os.getenv("DB_NAME", "pos_db")
-DB_USER = os.getenv("DB_USER", "pos_user")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-
+from app.core import config
 # DATABASE URL
 # mysql+mysqlconnector://user:password@host:port/db_name
 
 DATABASE_URL = (
-    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    f"mysql+mysqlconnector://{config.DB_USER}:"
+    f"{config.DB_PASSWORD}@"
+    f"{config.DB_HOST}:"
+    f"{config.DB_PORT}/"
+    f"{config.DB_NAME}"
 )
 
 # SQLALCHEMY ENGINE
