@@ -31,3 +31,8 @@ class SaleOut(BaseModel):
     items: List[SaleItemOut]
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class SaleListOut(BaseModel):
+    total: Decimal
+    items: List[SaleOut]
