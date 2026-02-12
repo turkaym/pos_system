@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DECIMAL, DateTime, Enum
+from sqlalchemy import Column, Integer, DECIMAL, DateTime, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.core.database import Base
@@ -12,6 +12,7 @@ class Sale(Base):
     payment_method = Column(Enum("cash", "card", "transfer"), nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+    created_by = Column(Integer, ForeignKey("users.id"), nullable=False)
 
     items = relationship(
         "SaleItem",
@@ -19,3 +20,5 @@ class Sale(Base):
         cascade="all, delete-orphan",
         lazy="select",
     )
+
+    creator = relationship("User")

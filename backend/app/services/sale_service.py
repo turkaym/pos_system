@@ -4,11 +4,12 @@ from decimal import Decimal
 
 from app.models.product import Product
 from app.models.sale import Sale
+from app.models.user import User
 from app.models.sale_item import SaleItem
 from app.schemas.sale import SaleCreate
 
 
-def create_sale(*, db: Session, data: SaleCreate) -> Sale:
+def create_sale(*, db: Session, data: SaleCreate, user: User) -> Sale:
     if not data.items:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -20,7 +21,8 @@ def create_sale(*, db: Session, data: SaleCreate) -> Sale:
     with db.begin():
         sale = Sale(
             total=Decimal("0.00"),
-            payment_method=data.payment_method
+            payment_method=data.payment_method,
+            created_by=user.id,
         )
         db.add(sale)
         db.flush()  # get sale.id
